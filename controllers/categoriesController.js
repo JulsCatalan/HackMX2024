@@ -3,11 +3,20 @@ import db from "../config/db.js";
 const categoryController = {
     // Controlador para crear una categoría (colección)
     createCategory: async (req, res) => {
+        let { category } = req.body;
 
-        const { category } = req.body;
+        // Asegurarse de que la categoría comience con letra mayúscula
+        category = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
 
         try {
-            const result = await database.createCollection(category);
+            // Verificar si la colección ya existe
+            const collections = await db.listCollections({ name: category }).toArray();
+            if (collections.length > 0) {
+                return res.status(409).json({ message: 'La categoría ya existe' });
+            }
+
+            // Crear la nueva colección si no existe
+            const result = await db.createCollection(category);
             res.status(201).json({ message: 'Colección creada exitosamente', collectionName: category });
         } catch (error) {
             console.error('Error al crear la colección:', error);
@@ -17,14 +26,6 @@ const categoryController = {
 
     // Controlador para eliminar una categoría (colección)
     deleteCategory: async (req, res) => {
-        const userId = req.cookies.userId;
-
-        const isAdmin = await validateAdmin(userId);
-
-        if (!isAdmin) {
-            return res.status(401).send(error_html);
-        }
-
         const { category } = req.body;
 
         try {

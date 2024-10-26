@@ -15,9 +15,11 @@ const productController = {
 
             const newProduct = {
                 _id: productId,
-                name,
-                price,
                 category,
+                name,
+                description,
+                price,
+                stock,
                 createdAt: new Date()
             };
 

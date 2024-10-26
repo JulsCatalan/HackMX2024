@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abasto - Administración de Productos</title>
+    <script defer src="js/productManagement.js"></script>
 </head>
 <body>
     <h1>Administrar Productos</h1>
@@ -12,10 +13,13 @@
     <h2>Agregar Producto</h2>
     <form id="addProductForm">
         <label for="addCategory">Categoría:</label>
-        <input type="text" id="addCategory" name="category" required><br>
+        <select id="addCategory" name="category" required></select><br>
 
         <label for="addName">Nombre:</label>
         <input type="text" id="addName" name="name" required><br>
+
+        <label for="addDescription">Descripción:</label>
+        <input type="text" id="addDescription" name="description" required><br>
 
         <label for="addPrice">Precio:</label>
         <input type="number" id="addPrice" name="price" required><br>
@@ -30,10 +34,10 @@
     <h2>Editar Producto</h2>
     <form id="editProductForm">
         <label for="editCategory">Categoría:</label>
-        <input type="text" id="editCategory" name="category" required><br>
+        <select id="editCategory" name="category" required></select><br>
 
-        <label for="editProductId">ID del Producto:</label>
-        <input type="text" id="editProductId" name="productId" required><br>
+        <label for="editProductId">Producto:</label>
+        <select id="editProductId" name="productId" required></select><br>
 
         <label for="editName">Nombre:</label>
         <input type="text" id="editName" name="name" required><br>
@@ -51,14 +55,13 @@
     <h2>Eliminar Producto</h2>
     <form id="deleteProductForm">
         <label for="deleteCategory">Categoría:</label>
-        <input type="text" id="deleteCategory" name="category" required><br>
+        <select id="deleteCategory" name="category" required></select><br>
 
-        <label for="deleteProductId">ID del Producto:</label>
-        <input type="text" id="deleteProductId" name="productId" required><br>
+        <label for="deleteProductId">Producto:</label>
+        <select id="deleteProductId" name="productId" required></select><br>
 
         <button type="submit">Eliminar Producto</button>
     </form>
 
-    <script src="js/productManagement.js"></script>
 </body>
 </html>

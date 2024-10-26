@@ -6,7 +6,7 @@ document.getElementById("addCategoryForm").addEventListener("submit", async (eve
 
     const category = document.getElementById("addCategory").value;
 
-    const response = await fetch("/categories/add-category", {
+    const response = await fetch("/add-category", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ category })
@@ -22,7 +22,7 @@ document.getElementById("deleteCategoryForm").addEventListener("submit", async (
 
     const category = document.getElementById("deleteCategory").value;
 
-    const response = await fetch("/categories/delete-category", {
+    const response = await fetch("/delete-category", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ category })
@@ -32,9 +32,9 @@ document.getElementById("deleteCategoryForm").addEventListener("submit", async (
     alert(result.message);
 });
 
-// Manejar el botón para obtener todas las categorías
-document.getElementById("getAllCategoriesButton").addEventListener("click", async () => {
-    const response = await fetch("/categories/get-all-categories", {
+// Manejar el botón para obtener todas las categorías al cargar la página
+window.onload = async () => {
+    const response = await fetch("/get-all-categories", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     });
@@ -43,9 +43,15 @@ document.getElementById("getAllCategoriesButton").addEventListener("click", asyn
     const categoriesList = document.getElementById("categoriesList");
     categoriesList.innerHTML = "<h3>Lista de Categorías:</h3>";
 
-    categories.forEach((category) => {
-        const categoryItem = document.createElement("p");
-        categoryItem.textContent = category;
-        categoriesList.appendChild(categoryItem);
-    });
-});
+    if (categories.length === 0) {
+        const noCategoriesMessage = document.createElement("p");
+        noCategoriesMessage.textContent = "No hay categorías para mostrar";
+        categoriesList.appendChild(noCategoriesMessage);
+    } else {
+        categories.forEach((category) => {
+            const categoryItem = document.createElement("p");
+            categoryItem.textContent = category;
+            categoriesList.appendChild(categoryItem);
+        });
+    }
+};
