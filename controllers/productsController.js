@@ -118,6 +118,7 @@ const productController = {
             res.status(500).json({ error: 'Error al obtener los productos' });
         }
     }
+
 };
 
 export default productController;
