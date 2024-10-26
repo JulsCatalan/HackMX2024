@@ -16,7 +16,6 @@
 .botones {
     width: 20rem;
     height: 5rem;
-    margin: 2.5rem auto;
     border: none;
     border-radius: 1.5rem;
     font-size: 2rem;
@@ -28,4 +27,8 @@
     border: 1px solid #90162a;
     color: #90162a;
     background-color: whitesmoke;
+}
+
+a {
+    margin: 2.5rem auto;
 }
