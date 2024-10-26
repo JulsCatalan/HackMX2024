@@ -11,7 +11,7 @@ const client = new MongoClient(uri, {
     }
 });
 
-let database = client.db("NanoStoreCluster"); 
+let db = client.db("NanoStoreCluster"); 
 
 export const initializeDBConnection = async () => {
     try {
@@ -23,6 +23,4 @@ export const initializeDBConnection = async () => {
     }
 };
 
-initializeDBConnection();
-
-export default database;
+export default db;
