@@ -34,7 +34,14 @@ const productController = {
 
     // Controlador para obtener un producto por ID usando GET
     getProduct: async (req, res) => {
-        const { category, productId } = req.query;  
+        const { category, productId } = req.query;
+
+        console.log(req.query);
+
+        // Validar que los parámetros necesarios estén presentes
+        if (!category || !productId) {
+            return res.status(400).json({ message: 'Faltan parámetros requeridos: categoría o ID de producto.' });
+        }
 
         try {
             const categoryCollection = db.collection(category);
