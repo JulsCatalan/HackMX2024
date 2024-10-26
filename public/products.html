@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abasto - Administración de Productos</title>
+</head>
+<body>
+    <h1>Administrar Productos</h1>
+
+    <!-- Formulario para agregar un producto -->
+    <h2>Agregar Producto</h2>
+    <form id="addProductForm">
+        <label for="addCategory">Categoría:</label>
+        <input type="text" id="addCategory" name="category" required><br>
+
+        <label for="addName">Nombre:</label>
+        <input type="text" id="addName" name="name" required><br>
+
+        <label for="addPrice">Precio:</label>
+        <input type="number" id="addPrice" name="price" required><br>
+
+        <label for="addStock">Stock:</label>
+        <input type="number" id="addStock" name="stock" required><br>
+
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <!-- Formulario para editar un producto -->
+    <h2>Editar Producto</h2>
+    <form id="editProductForm">
+        <label for="editCategory">Categoría:</label>
+        <input type="text" id="editCategory" name="category" required><br>
+
+        <label for="editProductId">ID del Producto:</label>
+        <input type="text" id="editProductId" name="productId" required><br>
+
+        <label for="editName">Nombre:</label>
+        <input type="text" id="editName" name="name" required><br>
+
+        <label for="editPrice">Precio:</label>
+        <input type="number" id="editPrice" name="price" required><br>
+
+        <label for="editStock">Stock:</label>
+        <input type="number" id="editStock" name="stock" required><br>
+
+        <button type="submit">Editar Producto</button>
+    </form>
+
+    <!-- Formulario para eliminar un producto -->
+    <h2>Eliminar Producto</h2>
+    <form id="deleteProductForm">
+        <label for="deleteCategory">Categoría:</label>
+        <input type="text" id="deleteCategory" name="category" required><br>
+
+        <label for="deleteProductId">ID del Producto:</label>
+        <input type="text" id="deleteProductId" name="productId" required><br>
+
+        <button type="submit">Eliminar Producto</button>
+    </form>
+
+    <script src="js/productManagement.js"></script>
+</body>
+</html>

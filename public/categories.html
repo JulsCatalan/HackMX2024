@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abasto</title>
+</head>
+<body>
+    <h1>Administración de Categorías</h1>
+
+    <!-- Formulario para agregar una categoría -->
+    <h2>Agregar Categoría</h2>
+    <form id="addCategoryForm">
+        <label for="addCategory">Nombre de la Categoría:</label>
+        <input type="text" id="addCategory" name="category" required><br>
+        <button type="submit">Agregar Categoría</button>
+    </form>
+
+    <!-- Formulario para eliminar una categoría -->
+    <h2>Eliminar Categoría</h2>
+    <form id="deleteCategoryForm">
+        <label for="deleteCategory">Nombre de la Categoría:</label>
+        <input type="text" id="deleteCategory" name="category" required><br>
+        <button type="submit">Eliminar Categoría</button>
+    </form>
+
+    <!-- Botón para obtener todas las categorías -->
+    <h2>Obtener Todas las Categorías</h2>
+    <button id="getAllCategoriesButton">Obtener Categorías</button>
+
+    <!-- Contenedor para mostrar las categorías -->
+    <div id="categoriesList"></div>
+
+    <script src="js/categoryManagment.js"></script>
+</body>
+</html>

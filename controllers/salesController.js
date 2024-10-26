@@ -7,7 +7,7 @@ function normalizeName(name) {
         .replace(/\s+/g, '_');
 }
 
-export const saleController = {
+const saleController = {
     addSale: async (req, res) => { 
         const { products, status, payment, client, total_price } = req.body;
 
@@ -55,3 +55,6 @@ export const saleController = {
         }
     }
 };
+
+
+export default saleController;
