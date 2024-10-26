@@ -18,32 +18,6 @@ app.use(cookieParser());
 
 initializeDBConnection();
 
-// Middleware de autenticación
-app.use((req, res, next) => {
-    if (req.cookies.isAuthenticated || req.path === '/login' || req.path === '/verify-password') {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-});
-
-// Ruta para mostrar el formulario de contraseña
-app.get('/login', (req, res) => {
-    res.sendFile("login.html", { root: "public" });
-});
-
-// Ruta para verificar la contraseña
-app.post('/verify-password', (req, res) => {
-    const { password } = req.body;
-    if (password === process.env.PAGE_PASSWORD) {
-        // Establece la cookie de autenticación con una duración de 1 hora
-        res.cookie('isAuthenticated', true, { maxAge: 10 * 60 * 1000, httpOnly: true });
-        res.json({ success: true });
-    } else {
-        res.json({ success: false, message: "Contraseña incorrecta" });
-    }
-});
-
 // Rutas principales
 app.get('/', (req, res) => {
     res.sendFile("index.html", { root: "public" });
