@@ -4,3 +4,4 @@ const menu = document.querySelector('.navbar_container');
 toggle_menu_btn.addEventListener('click', function() {
     menu.classList.toggle('navbar_active');
 });
+

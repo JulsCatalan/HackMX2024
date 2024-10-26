@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%; /* 1rem = 10px */
+    box-sizing: border-box;
+}
+
+:root {
+    --inter: "Inter", sans-serif;
+
+    --red: #460000;
+    --black: #18181b;
+    --light_black: #212529;
+    --white: #f8f9fa;
+    --light_grey: #e9ecef;
+    --medium_grey: #dee2e6;
+
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: 1.5rem;
+    --font-xxl: 2rem;
+    --font-xxxl: 2.5rem;
+    --font-xxxxl: 3rem;
+}
+
+body {
+    font-family: var(--inter);
+    font-size: var(--font-md);
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: var(--font-xxxl);
+    text-align: center;
+    color: var(--black);
+    padding: 4rem 0;
+}
+
+#inventoryContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+}
+
+.category-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.category-button {
+    width: 80%;
+    padding: 2rem;
+    font-size: var(--font-xxl);
+    color: var(--black);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.products-container {
+    display: none;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background-color: var(--white);
+    border: 1px solid var(--medium_grey);
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-card h3 {
+    font-size: var(--font-xl);
+    margin: 0;
+    color: var(--black);
+}
+
+.product-card p {
+    font-size: var(--font-md);
+    color: var(--light_black);
+    margin-top: 1rem;
+}
+
+.no-products {
+    text-align: center;
+    color: var(--light_black);
+    font-size: var(--font-lg);
+    margin-top: 1rem;
+}

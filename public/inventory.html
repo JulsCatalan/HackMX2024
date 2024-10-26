@@ -3,79 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abasto - Inventario</title>
-    <style>
-        /* CSS Inline para Estilos de las Tarjetas */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #inventoryContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-
-        .category-section {
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 40px;
-        }
-
-        .category-section h2 {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .products-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            width: 200px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .product-card h3 {
-            font-size: 1.2em;
-            margin: 0;
-            color: #333;
-        }
-
-        .product-card p {
-            color: #666;
-            margin: 10px 0 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/inventory.css">
+    <title>Inventario</title>
 </head>
 <body>
+    <button id="toggle_menu_navbar"><svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
+    <nav class="navbar_container">
+        <a href="/inventory">Inventario</a>
+        <a href="/sales">Ventas</a>
+        <a href="/addSale">Agregar Venta</a>
+        <a href="/products">Admin. Productos</a>
+        <a href="/categories">Admin. Categorias</a>
+    </nav>
     <h1>Inventario</h1>
     <div id="inventoryContainer"></div>
 
-    <script>
-        // JavaScript para cargar y renderizar productos en tarjetas
+    <script src="js/general.js"></script>
 
+    <script>
         // Función para obtener todos los productos y renderizarlos en el inventario
         async function loadInventory() {
             try {
@@ -86,46 +32,55 @@
                 inventoryContainer.innerHTML = ""; // Limpiar el contenedor antes de agregar contenido
 
                 categories.forEach((category) => {
-                    // Crear un contenedor para cada categoría
                     const categorySection = document.createElement("div");
                     categorySection.classList.add("category-section");
 
-                    const categoryTitle = document.createElement("h2");
-                    categoryTitle.textContent = category.category;
-                    categorySection.appendChild(categoryTitle);
+                    const categoryButton = document.createElement("button");
+                    categoryButton.classList.add("button-30", "category-button");
+                    categoryButton.textContent = category.category;
+                    categoryButton.addEventListener("click", () => {
+                        const productsContainer = categorySection.querySelector(".products-container");
+                        productsContainer.style.display = productsContainer.style.display === "none" ? "flex" : "none";
+                    });
 
-                    // Crear tarjetas para cada producto en la categoría
+                    // Crear el contenedor de productos y ocultarlo inicialmente
                     const productsContainer = document.createElement("div");
                     productsContainer.classList.add("products-container");
 
-                    category.products.forEach((product) => {
-                        const productCard = document.createElement("div");
-                        productCard.classList.add("product-card");
+                    // Si no hay productos en la categoría, mostrar mensaje
+                    if (category.products.length === 0) {
+                        const noProductsMessage = document.createElement("p");
+                        noProductsMessage.classList.add("no-products");
+                        noProductsMessage.textContent = "No hay productos dentro de esta categoría";
+                        productsContainer.appendChild(noProductsMessage);
+                    } else {
+                        // Crear tarjetas de producto si hay productos disponibles
+                        category.products.forEach((product) => {
+                            const productCard = document.createElement("div");
+                            productCard.classList.add("product-card");
 
-                        // Crear el contenido de la tarjeta
-                        const productName = document.createElement("h3");
-                        productName.textContent = product.name;
+                            const productName = document.createElement("h3");
+                            productName.textContent = product.name;
 
-                        const productDescription = document.createElement("p");
-                        productDescription.textContent = product.description || "Sin descripción";
+                            const productDescription = document.createElement("p");
+                            productDescription.textContent = product.description || "Sin descripción";
 
-                        const productPrice = document.createElement("p");
-                        productPrice.textContent = `Precio: $${product.price}`;
+                            const productPrice = document.createElement("p");
+                            productPrice.textContent = `Precio: $${product.price}`;
 
-                        const productStock = document.createElement("p");
-                        productStock.textContent = `Stock: ${product.stock}`;
+                            const productStock = document.createElement("p");
+                            productStock.textContent = `Stock: ${product.stock}`;
 
-                        // Agregar contenido a la tarjeta
-                        productCard.appendChild(productName);
-                        productCard.appendChild(productDescription);
-                        productCard.appendChild(productPrice);
-                        productCard.appendChild(productStock);
+                            productCard.appendChild(productName);
+                            productCard.appendChild(productDescription);
+                            productCard.appendChild(productPrice);
+                            productCard.appendChild(productStock);
 
-                        // Agregar tarjeta de producto al contenedor de productos
-                        productsContainer.appendChild(productCard);
-                    });
+                            productsContainer.appendChild(productCard);
+                        });
+                    }
 
-                    // Agregar contenedor de productos al contenedor de la categoría
+                    categorySection.appendChild(categoryButton);
                     categorySection.appendChild(productsContainer);
                     inventoryContainer.appendChild(categorySection);
                 });

@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%; /* 1rem = 10px */
+    box-sizing: border-box;
+}
+
+:root {
+    --inter: "Inter", sans-serif;
+
+    --red: #460000;
+    --black: #18181b;
+    --light_black: #212529;
+    --white: #f8f9fa;
+    --light_grey: #e9ecef;
+    --medium_grey: #dee2e6;
+    --green: #28a745;
+    --green-hover: #218838;
+
+    /* Tamaños de fuente más grandes */
+    --font-xs: 1rem;
+    --font-sm: 1.2rem;
+    --font-md: 1.4rem;
+    --font-lg: 1.6rem;
+    --font-xl: 2rem;
+    --font-xxl: 2.5rem;
+    --font-xxxl: 3rem;
+    --font-xxxxl: 3.5rem;
+}
+
+body {
+    font-family: var(--inter);
+    background-color: var(--light_grey);
+    color: var(--black);
+    font-size: var(--font-md);
+}
+
+a {
+    text-decoration: none;
+    color: var(--black);
+}
+
+.container {
+    max-width: 800px;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: 0.8rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: var(--font-xxxl);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2{
+    font-size: var(--font-xxl);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+form,
+.cart {
+    margin-bottom: 2rem;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    font-size: var(--font-xl);
+}
+
+select,
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    font-size: var(--font-xl);
+    border: 1px solid var(--medium_grey);
+    border-radius: 0.5rem;
+}
+
+.cart-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--medium_grey);
+    font-size: var(--font-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.cart-item button{
+    background-color: var(--light_grey);
+    padding: 1rem 2rem;
+    color: var(--red);
+    border: 0;
+    border-radius: 5px;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-summary {
+    font-weight: bold;
+    text-align: right;
+    font-size: var(--font-xl);
+}

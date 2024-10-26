@@ -4,75 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realizar Venta</title>
-    <style>
-        /* Estilos básicos */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        form, .cart {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-
-        .cart-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .cart-summary {
-            font-weight: bold;
-            text-align: right;
-        }
-
-        button {
-            margin-top: 10px;
-            padding: 10px;
-            width: 100%;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/add_sales.css">
 </head>
 <body>
+    <button id="toggle_menu_navbar"><svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
+    <nav class="navbar_container">
+        <a href="/inventory">Inventario</a>
+        <a href="/sales">Ventas</a>
+        <a href="/addSale">Agregar Venta</a>
+        <a href="/products">Admin. Productos</a>
+        <a href="/categories">Admin. Categorias</a>
+    </nav>
+
     <div class="container">
         <h1>Realizar Venta</h1>
 
@@ -84,13 +28,13 @@
             <label for="product">Producto:</label>
             <select id="product" name="product" required></select>
 
-            <label for="price">Precio Vendido:</label>
+            <label for="price">Precio de Venta:</label>
             <input type="number" id="price" name="price" required min="0" step="0.01">
 
             <label for="quantity">Cantidad Vendida:</label>
             <input type="number" id="quantity" name="quantity" required min="1" step="1">
 
-            <button type="button" onclick="addToCart()">Agregar al Carrito</button>
+            <button type="button" onclick="addToCart()" class="general_btn_one">Agregar al Carrito</button>
         </form>
 
         <!-- Carrito de productos -->
@@ -116,10 +60,10 @@
                 <option value="card">Tarjeta</option>
             </select>
 
-            <button type="button" onclick="submitSale()">Finalizar Venta</button>
+            <button type="button" onclick="submitSale()" class="general_btn_one">Finalizar Venta</button>
         </form>
     </div>
-
+    <script src="js/general.js"></script>
     <script>
         // JavaScript para manejar la venta
         let cart = []; // Carrito de productos
