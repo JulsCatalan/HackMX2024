@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ventas</title>
+    <style>
+        /* Estilos para la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-form select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .sale-card {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .sale-card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .sale-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .products-list {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Ventas</h1>
+
+        <!-- Formulario para filtrar por fecha -->
+        <div class="filter-form">
+            <label for="dateFilter">Filtrar por Fecha:</label>
+            <select id="dateFilter" onchange="filterSalesByDate()">
+                <option value="">Seleccione una fecha</option>
+            </select>
+        </div>
+
+        <div id="salesContainer"></div>
+    </div>
+
+    <script>
+        // Cargar fechas disponibles al cargar la página
+        async function loadAvailableDates() {
+            try {
+                const response = await fetch("/get-available-dates"); // Endpoint para obtener fechas únicas
+                const dates = await response.json();
+                const dateFilter = document.getElementById("dateFilter");
+
+                dates.forEach(date => {
+                    const option = document.createElement("option");
+                    option.value = date;
+                    option.textContent = date;
+                    dateFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error al cargar fechas disponibles:", error);
+            }
+        }
+
+        // Función para cargar y renderizar las ventas en la página
+        async function loadSales(date = '') {
+            try {
+                let url = "/get-all-sales";
+                if (date) {
+                    url += `?date=${date}`; // Agregar fecha como parámetro si está seleccionada
+                }
+
+                const response = await fetch(url);
+                const sales = await response.json();
+
+                const salesContainer = document.getElementById("salesContainer");
+                salesContainer.innerHTML = ""; // Limpiar contenido previo
+
+                sales.forEach(sale => {
+                    const saleCard = document.createElement("div");
+                    saleCard.classList.add("sale-card");
+
+                    saleCard.innerHTML = `
+                        <h3>Venta ID: ${sale.saleId}</h3>
+                        <p><strong>Fecha:</strong> ${sale.date}</p>
+                        <p><strong>Estado de Pago:</strong> ${sale.status ? "Pagado" : "Pendiente"}</p>
+                        <p><strong>Método de Pago:</strong> ${sale.payment === "cash" ? "Efectivo" : "Tarjeta"}</p>
+                        <p><strong>Total:</strong> $${sale.total_bill}</p>
+                        <p><strong>Productos:</strong></p>
+                    `;
+
+                    const productList = document.createElement("ul");
+                    productList.classList.add("products-list");
+
+                    sale.products.forEach(product => {
+                        const productItem = document.createElement("li");
+                        productItem.textContent = `${product.productName} - ${product.quantity} x $${product.price} = $${product.total}`;
+                        productList.appendChild(productItem);
+                    });
+
+                    saleCard.appendChild(productList);
+                    salesContainer.appendChild(saleCard);
+                });
+            } catch (error) {
+                console.error("Error al cargar las ventas:", error);
+            }
+        }
+
+        // Función para filtrar ventas por fecha seleccionada
+        function filterSalesByDate() {
+            const selectedDate = document.getElementById("dateFilter").value;
+            loadSales(selectedDate);
+        }
+
+        // Cargar todas las ventas y las fechas disponibles al cargar la página
+        window.addEventListener("load", () => {
+            loadAvailableDates();
+            loadSales();
+        });
+    </script>
+</body>
+</html>

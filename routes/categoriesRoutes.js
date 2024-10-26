@@ -13,7 +13,7 @@ router.delete('/delete-category', categoryController.deleteCategory);
 router.get('/get-all-categories', categoryController.getAllCategories);
 
 // Ruta de error 404 para productos (debe ir al final)
-router.use('/categories', (req, res) => {
+router.get('/categories', (req, res) => {
     res.sendFile("categories.html", { root: "public" });
 });
 

@@ -23,7 +23,7 @@ router.use('/products', (req, res) => {
     res.sendFile("products.html", { root: "public" });
 });
 
-router.use('/inventory', (req, res) => {
+router.get('/inventory', (req, res) => {
     res.sendFile("inventory.html", { root: "public" });
 });
 
