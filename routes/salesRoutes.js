@@ -12,6 +12,7 @@ router.get('/get-all-sales', saleController.getAllSales);
 // Endpoint para obtener fechas únicas
 router.get('/get-available-dates', saleController.getSalesDates);
 
+router.get('/get-sales-products', saleController.getAllSalesWithProducts);
 
 router.get('/addSale', (req, res) => {
     res.sendFile("addSale.html", { root: "public" });

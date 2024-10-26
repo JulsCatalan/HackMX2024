@@ -91,6 +91,34 @@ const saleController = {
             console.error("Error al obtener fechas únicas:", error);
             res.status(500).json({ message: "Error al obtener fechas" });
         }
+    },
+
+    getAllSalesWithProducts: async (req, res) => {
+        try {
+            const salesCollection = db.collection("sales");
+            const sales = await salesCollection.find().toArray(); // Obtener todas las ventas
+
+            const salesWithProductDetails = await Promise.all(sales.map(async (sale) => {
+                const productsWithDetails = await Promise.all(sale.products.map(async (product) => {
+                    const categoryCollection = db.collection(product.category); // Colección de categoría específica
+                    const productDetails = await categoryCollection.findOne({ _id: product.productId });
+                    return {
+                        ...product,
+                        details: productDetails
+                    };
+                }));
+                
+                return {
+                    ...sale,
+                    products: productsWithDetails
+                };
+            }));
+
+            res.status(200).json(salesWithProductDetails);
+        } catch (error) {
+            console.error("Error al obtener ventas y detalles de productos:", error);
+            res.status(500).json({ message: "Error al obtener ventas y detalles de productos" });
+        }
     }
 };
 
