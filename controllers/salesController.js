@@ -95,9 +95,11 @@ const saleController = {
 
     getAllSalesWithProducts: async (req, res) => {
         try {
+            // Obtener todas las ventas
             const salesCollection = db.collection("sales");
-            const sales = await salesCollection.find().toArray(); // Obtener todas las ventas
+            const sales = await salesCollection.find().toArray();
 
+            // Obtener detalles de cada producto en cada venta
             const salesWithProductDetails = await Promise.all(sales.map(async (sale) => {
                 const productsWithDetails = await Promise.all(sale.products.map(async (product) => {
                     const categoryCollection = db.collection(product.category); // Colección de categoría específica
@@ -107,14 +109,35 @@ const saleController = {
                         details: productDetails
                     };
                 }));
-                
+
                 return {
                     ...sale,
                     products: productsWithDetails
                 };
             }));
 
-            res.status(200).json(salesWithProductDetails);
+            // Obtener todos los productos en todas las categorías
+            const collections = await db.listCollections().toArray();
+            const allProducts = [];
+
+            for (const collection of collections) {
+                const collectionName = collection.name;
+
+                if (/^[A-Z]/.test(collectionName) && collectionName !== 'system.indexes') {
+                    const categoryCollection = db.collection(collectionName);
+                    const categoryProducts = await categoryCollection.find({}).toArray();
+                    allProducts.push({
+                        category: collectionName,
+                        products: categoryProducts
+                    });
+                }
+            }
+
+            // Responder con ventas (incluyendo detalles de productos) y todos los productos por categoría
+            res.status(200).json({
+                sales: salesWithProductDetails,
+                allProducts: allProducts
+            });
         } catch (error) {
             console.error("Error al obtener ventas y detalles de productos:", error);
             res.status(500).json({ message: "Error al obtener ventas y detalles de productos" });
