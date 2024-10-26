@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abasto - Administración de Productos</title>
     <script defer src="js/productManagement.js"></script>
-    <link rel="stylesheet" href="./css/products.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
+    <button id="toggle_menu_navbar"><svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
+    <nav class="navbar_container">
+        <a href="/inventory">Inventario</a>
+        <a href="/sales">Ventas</a>
+        <a href="/addSale">Agregar Venta</a>
+        <a href="/products">Admin. Productos</a>
+        <a href="/categories">Admin. Categorias</a>
+    </nav>
+
     <h1>Administrar Productos</h1>
 
     <!-- Formulario para agregar un producto -->
@@ -28,7 +38,7 @@
         <label for="addStock">Stock:</label>
         <input type="number" id="addStock" name="stock" required><br>
 
-        <button type="submit">Agregar Producto</button>
+        <button type="submit" class="general_btn_one">Agregar Producto</button>
     </form>
 
     <!-- Formulario para editar un producto -->
@@ -49,7 +59,7 @@
         <label for="editStock">Stock:</label>
         <input type="number" id="editStock" name="stock" required><br>
 
-        <button type="submit">Editar Producto</button>
+        <button type="submit" class="general_btn_one">Editar Producto</button>
     </form>
 
     <!-- Formulario para eliminar un producto -->
@@ -61,9 +71,8 @@
         <label for="deleteProductId">Producto:</label>
         <select id="deleteProductId" name="productId" required></select><br>
 
-        <button type="submit">Eliminar Producto</button>
+        <button type="submit" class="general_btn_one">Eliminar Producto</button>
     </form>
-
-
+    <script src="js/general.js"></script>
 </body>
 </html>

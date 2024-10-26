@@ -2,8 +2,8 @@ import db from "../config/db.js";
 
 const productController = {
     // Controlador para agregar un producto
+    // Controlador para agregar un producto
     addProduct: async (req, res) => {
-      
         const { category, description, name, price, stock } = req.body;
 
         try {
@@ -18,8 +18,8 @@ const productController = {
                 category,
                 name,
                 description,
-                price,
-                stock,
+                price: parseFloat(price), // Asegurar que price sea un número
+                stock: parseInt(stock), // Convertir stock a número entero
                 createdAt: new Date()
             };
 

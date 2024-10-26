@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abasto</title>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
+    <button id="toggle_menu_navbar"><svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
+    <nav class="navbar_container">
+        <a href="/inventory">Inventario</a>
+        <a href="/sales">Ventas</a>
+        <a href="/addSale">Agregar Venta</a>
+        <a href="/products">Admin. Productos</a>
+        <a href="/categories">Admin. Categorias</a>
+    </nav>
+
     <h1>Administración de Categorías</h1>
 
     <!-- Formulario para agregar una categoría -->
@@ -13,7 +24,7 @@
     <form id="addCategoryForm">
         <label for="addCategory">Nombre de la Categoría:</label>
         <input type="text" id="addCategory" name="category" required><br>
-        <button type="submit">Agregar Categoría</button>
+        <button type="submit" class="general_btn_one">Agregar Categoría</button>
     </form>
 
     <!-- Formulario para eliminar una categoría -->
@@ -21,12 +32,13 @@
     <form id="deleteCategoryForm">
         <label for="deleteCategory">Nombre de la Categoría:</label>
         <input type="text" id="deleteCategory" name="category" required><br>
-        <button type="submit">Eliminar Categoría</button>
+        <button type="submit" class="general_btn_one">Eliminar Categoría</button>
     </form>
     
     <!-- Contenedor para mostrar las categorías -->
     <div id="categoriesList"></div>
 
     <script src="js/categoryManagment.js"></script>
+    <script src="js/general.js"></script>
 </body>
 </html>

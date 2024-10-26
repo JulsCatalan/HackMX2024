@@ -1,0 +1,100 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+:root {
+    --inter: "Inter", sans-serif;
+
+    --red: #460000;
+    --black: #18181b;
+    --light_black: #212529;
+    --white: #f8f9fa;
+    --light_grey: #e9ecef;
+    --medium_grey: #dee2e6;
+
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: 1.5rem;
+    --font-xxl: 2rem;
+    --font-xxxl: 2.5rem;
+    --font-xxxxl: 3rem;
+}
+
+body{
+    font-family: var(--inter);
+}
+
+a{
+    text-decoration: none;
+}
+
+h1 {
+    font-size: var(--font-xxxl);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+h2{
+    font-size: var(--font-xxl);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+form{
+    background-color: var(--light_grey);
+    border-radius: 1rem;
+    padding: 4rem;
+    margin: 4rem;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    font-size: var(--font-xl);
+}
+
+select,
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    font-size: var(--font-xl);
+    border: 1px solid var(--medium_grey);
+    border-radius: 0.5rem;
+}
+
+
+#categoriesList{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 4rem;
+}
+
+#categoriesList h3{
+    font-size: var(--font-xxl);
+    font-weight: 700;
+    color: var(--light_black);
+    margin-bottom: 2rem;
+}
+
+#categoriesList p{
+    font-size: var(--font-xl);
+    font-weight: 500;
+    color: var(--light_black);
+}

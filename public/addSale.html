@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/add_sales.css">
 </head>
 <body>
-    <button id="toggle_menu_navbar"><svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
+    <button id="toggle_menu_navbar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg></button>
     <nav class="navbar_container">
         <a href="/inventory">Inventario</a>
         <a href="/sales">Ventas</a>
@@ -65,8 +65,8 @@
     </div>
     <script src="js/general.js"></script>
     <script>
-        // JavaScript para manejar la venta
         let cart = []; // Carrito de productos
+        let currentProductStock = 0; // Variable para almacenar el stock actual del producto seleccionado
 
         // Cargar categorías y productos al cargar la página
         window.addEventListener("load", async () => {
@@ -118,10 +118,33 @@
                     option.textContent = product.name;
                     productSelect.appendChild(option);
                 });
+
+                // Cargar stock del primer producto por defecto
+                if (products.length > 0) {
+                    await updateProductStock(products[0]._id, category);
+                }
             } catch (error) {
                 console.error("Error al cargar productos:", error);
             }
         }
+
+        // Actualizar el stock del producto seleccionado
+        async function updateProductStock(productId, category) {
+            try {
+                const response = await fetch(`/products/get-product?category=${category}&productId=${productId}`);
+                const product = await response.json();
+                currentProductStock = product.stock || 0; // Asignar el stock actual del producto
+            } catch (error) {
+                console.error("Error al obtener el stock del producto:", error);
+            }
+        }
+
+        // Actualizar el stock cuando cambia el producto seleccionado
+        document.getElementById("product").addEventListener("change", async (event) => {
+            const productId = event.target.value;
+            const category = document.getElementById("category").value;
+            await updateProductStock(productId, category);
+        });
 
         // Función para agregar un producto al carrito
         function addToCart() {
@@ -133,6 +156,12 @@
 
             if (!category || !productId || isNaN(price) || isNaN(quantity)) {
                 alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            // Verificar si la cantidad solicitada está disponible en stock
+            if (quantity > currentProductStock) {
+                alert(`Stock insuficiente. Solo hay ${currentProductStock} unidades disponibles.`);
                 return;
             }
 

@@ -1,4 +1,4 @@
-import db from "../config/db.js"; // Asegúrate de que 'db' sea una instancia conectada de MongoDB
+import db from "../config/db.js";
 import { v4 as uuidv4 } from 'uuid';
 
 function normalizeName(name) {
@@ -27,32 +27,55 @@ const saleController = {
         const saleData = {
             saleId: saleId,
             products: products,
-            total_bill : total_price,
+            total_bill: total_price,
             date: formattedDateGMT6,
             status: status,
             payment: payment
         };
 
         try {
-            const salesCollection = db.collection("sales"); // Referencia a la colección "sales"
-            await salesCollection.insertOne(saleData); // Inserta el documento en MongoDB
-      
-            return res.status(201).json({ message: 'Venta agregada exitosamente', saleId: saleId });
+            // Insertar la venta en la colección "sales"
+            const salesCollection = db.collection("sales");
+            await salesCollection.insertOne(saleData);
+
+            // Actualizar el stock de cada producto en la venta según su categoría
+            for (const product of products) {
+                const { productId, category, quantity } = product;
+
+                // Obtener la colección de la categoría específica
+                const categoryCollection = db.collection(category);
+
+                // Reducir el stock en la cantidad vendida
+                const result = await categoryCollection.updateOne(
+                    { _id: productId },
+                    { $inc: { stock: -quantity } }
+                );
+
+                if (result.modifiedCount === 0) {
+                    console.warn(`El producto con ID ${productId} en la categoría ${category} no se encontró o no se actualizó el stock.`);
+                }
+            }
+
+            return res.status(201).json({ message: 'Venta agregada exitosamente y stock actualizado', saleId: saleId });
         } catch (error) {
-            console.error("Error al agregar venta:", error);
-            return res.status(500).json({ message: 'Error al agregar venta' });
+            console.error("Error al agregar venta o actualizar el stock:", error);
+            return res.status(500).json({ message: 'Error al agregar venta o actualizar el stock' });
         }
     },
 
     getAllSales: async (req, res) => {
+        const { date } = req.query;
         try {
-            const salesCollection = db.collection("sales"); // Referencia a la colección "sales"
-            const salesList = await salesCollection.find({}).toArray(); // Obtiene todos los documentos en un array
-      
-            return res.status(200).json(salesList); // Devuelve la lista de ventas en formato JSON
+            const salesCollection = db.collection("sales");
+            
+            // Si `date` está presente, aplica el filtro
+            const filter = date ? { date: { $regex: `^${date}` } } : {};
+            
+            const sales = await salesCollection.find(filter).toArray();
+            res.json(sales);
         } catch (error) {
-            console.error("Error al obtener ventas:", error);
-            return res.status(500).json({ message: 'Error al obtener ventas' });
+            console.error("Error al obtener las ventas:", error);
+            res.status(500).json({ message: "Error al obtener las ventas" });
         }
     },
 
@@ -62,7 +85,7 @@ const saleController = {
             const sales = await salesCollection.find({}, { projection: { date: 1 } }).toArray();
             
             // Extraer y devolver solo fechas únicas
-            const uniqueDates = [...new Set(sales.map(sale => sale.date.split(' ')[0]))]; // Mantiene solo la fecha (sin hora)
+            const uniqueDates = [...new Set(sales.map(sale => sale.date.split(' ')[0]))];
             res.json(uniqueDates);
         } catch (error) {
             console.error("Error al obtener fechas únicas:", error);
@@ -70,6 +93,5 @@ const saleController = {
         }
     }
 };
-
 
 export default saleController;
