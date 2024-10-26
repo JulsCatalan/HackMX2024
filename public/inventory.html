@@ -3,10 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abasto - Inventario</title>
+    <style>
+        /* CSS Inline para Estilos de las Tarjetas */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
 
-    <title>Abasto</title>
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #inventoryContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .category-section {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .category-section h2 {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-card h3 {
+            font-size: 1.2em;
+            margin: 0;
+            color: #333;
+        }
+
+        .product-card p {
+            color: #666;
+            margin: 10px 0 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Inventario</h1>
+    <div id="inventoryContainer"></div>
+
+    <script>
+        // JavaScript para cargar y renderizar productos en tarjetas
+
+        // Función para obtener todos los productos y renderizarlos en el inventario
+        async function loadInventory() {
+            try {
+                const response = await fetch("/products/get-all-products");
+                const categories = await response.json();
+                const inventoryContainer = document.getElementById("inventoryContainer");
+
+                inventoryContainer.innerHTML = ""; // Limpiar el contenedor antes de agregar contenido
+
+                categories.forEach((category) => {
+                    // Crear un contenedor para cada categoría
+                    const categorySection = document.createElement("div");
+                    categorySection.classList.add("category-section");
+
+                    const categoryTitle = document.createElement("h2");
+                    categoryTitle.textContent = category.category;
+                    categorySection.appendChild(categoryTitle);
+
+                    // Crear tarjetas para cada producto en la categoría
+                    const productsContainer = document.createElement("div");
+                    productsContainer.classList.add("products-container");
+
+                    category.products.forEach((product) => {
+                        const productCard = document.createElement("div");
+                        productCard.classList.add("product-card");
+
+                        // Crear el contenido de la tarjeta
+                        const productName = document.createElement("h3");
+                        productName.textContent = product.name;
+
+                        const productDescription = document.createElement("p");
+                        productDescription.textContent = product.description || "Sin descripción";
+
+                        const productPrice = document.createElement("p");
+                        productPrice.textContent = `Precio: $${product.price}`;
+
+                        const productStock = document.createElement("p");
+                        productStock.textContent = `Stock: ${product.stock}`;
+
+                        // Agregar contenido a la tarjeta
+                        productCard.appendChild(productName);
+                        productCard.appendChild(productDescription);
+                        productCard.appendChild(productPrice);
+                        productCard.appendChild(productStock);
+
+                        // Agregar tarjeta de producto al contenedor de productos
+                        productsContainer.appendChild(productCard);
+                    });
+
+                    // Agregar contenedor de productos al contenedor de la categoría
+                    categorySection.appendChild(productsContainer);
+                    inventoryContainer.appendChild(categorySection);
+                });
+            } catch (error) {
+                console.error("Error al cargar el inventario:", error);
+            }
+        }
+
+        // Cargar el inventario cuando la página se haya cargado
+        window.addEventListener("load", loadInventory);
+    </script>
 </body>
 </html>
